@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import BestTimeGraph from '../components/BestTimeGraph'; // 🟢 INJECTED FOR DISCOVERY
+import BestTimeGraph from '../components/BestTimeGraph';
 
 export default function SelectQueueType() {
   const navigate = useNavigate();
@@ -72,77 +72,125 @@ export default function SelectQueueType() {
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         .app-viewport {
-          width: 100vw; height: 100vh; height: 100dvh; background-color: #f8f9fa;
-          font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; overflow: hidden;
+          width: 100vw; height: 100vh; height: 100dvh; background-color: #5e4ae3;
+          font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; padding: 12px;
         }
 
         .mobile-layout {
-          width: 100%; max-width: 480px; height: 100%; background: #ffffff; display: flex; flex-direction: column; position: relative; overflow: hidden;
+          width: 100%; max-width: 410px; height: 100%;
+          background: #ffffff; display: flex; flex-direction: column; position: relative; overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+          .app-viewport { background-color: #ffffff; padding: 0; }
+          .mobile-layout { max-height: 100vh; border-radius: 0; box-shadow: none; }
         }
 
         .top-navbar {
           background: linear-gradient(135deg, #6d28d9 0%, #4a23b6 100%);
-          padding: 20px 16px; display: flex; align-items: center; color: #ffffff !important;
-          box-shadow: 0 4px 15px rgba(74, 35, 182, 0.15); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; flex-shrink: 0;
+          padding: 24px 20px; display: flex; align-items: center; color: #ffffff !important;
+          box-shadow: 0 4px 15px rgba(74, 35, 182, 0.15); border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; flex-shrink: 0;
         }
 
         .back-arrow-btn {
           background: rgba(255, 255, 255, 0.15); border: none; color: #ffffff !important;
-          cursor: pointer; padding: 8px; border-radius: 12px; display: flex; backdrop-filter: blur(4px);
+          cursor: pointer; padding: 8px; border-radius: 12px; display: flex; backdrop-filter: blur(4px); transition: background 0.2s;
         }
+        .back-arrow-btn:active { background: rgba(255, 255, 255, 0.3); }
         .navbar-title { font-size: 18px; font-weight: 700; color: #ffffff !important; margin-left: 14px; flex-grow: 1; letter-spacing: -0.3px; }
 
         .scrollable-body {
-          flex-grow: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; background: #f9fafb;
-          margin-bottom: 68px; -ms-overflow-style: none; scrollbar-width: none;
+          flex-grow: 1; overflow-y: auto; padding: 24px 20px 56px 20px; display: flex; flex-direction: column; gap: 18px; background: #ffffff;
+          -ms-overflow-style: none; scrollbar-width: none;
         }
         .scrollable-body::-webkit-scrollbar { display: none; }
 
         .manual-search-wrapper {
-          display: flex; align-items: center; background: #ffffff; border-radius: 14px; padding: 0 14px; border: 1px solid #e5e7eb; margin-bottom: 4px;
+          display: flex; align-items: center; background: #f1f3f7; border-radius: 14px; padding: 0 16px; height: 52px; transition: all 0.2s;
         }
-        .manual-search-wrapper input { border: none; outline: none; width: 100%; height: 46px; font-size: 14px; color: #1f2937; font-family: inherit; }
+        .manual-search-wrapper:focus-within { background: #ffffff; border-color: #5e4ae3; box-shadow: 0 0 0 4px rgba(94, 74, 227, 0.1); }
+        .manual-search-wrapper input { border: none; outline: none; width: 100%; height: 100%; font-size: 14.5px; color: #1f2235; font-weight: 600; background: transparent; }
+        .manual-search-wrapper input::placeholder { color: #9da3b4; font-weight: 500; }
 
-        .venue-indicator-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 18px; padding: 18px; text-align: center; }
-        .venue-indicator-card span { font-size: 11px; font-weight: 700; color: #6d28d9; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        .venue-indicator-card h2 { font-size: 18px; font-weight: 800; color: #111827; }
+        .venue-indicator-card { background: #f1f3f7; border-radius: 18px; padding: 18px 20px; text-align: left; border: 1px solid transparent; }
+        .venue-indicator-card span { font-size: 11px; font-weight: 700; color: #7e849c; text-transform: uppercase; display: block; margin-bottom: 2px; letter-spacing: 0.4px; }
+        .venue-indicator-card h2 { font-size: 20px; font-weight: 800; color: #1f2235; tracking: -0.3px; }
 
-        .section-prompt { font-size: 12px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: -4px; padding-left: 2px; }
+        .section-prompt { font-size: 11px; font-weight: 700; color: #9ca3b4; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: -6px; padding-left: 2px; }
 
-        .directory-result-node { background: #ffffff; border: 1px solid #f3f4f6; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
-        .node-info-block h4 { font-size: 15.5px; font-weight: 700; color: #111827; }
-        .node-info-block p { font-size: 12px; color: #6b7280; }
+        .directory-result-node { background: #ffffff; border: 1px solid #f1f3f7; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.01); }
+        .node-info-block h4 { font-size: 15.5px; font-weight: 700; color: #1f2235; margin-bottom: 2px; }
+        .node-info-block p { font-size: 12.5px; color: #7e849c; font-weight: 500; }
 
         .quick-action-split-row { display: flex; gap: 10px; }
-        .btn-quick-join { flex: 1; height: 38px; border-radius: 10px; border: none; font-size: 12.5px; font-weight: 700; cursor: pointer; }
-        .btn-join-regular { background: #f5f3ff; color: #6d28d9; }
-        .btn-join-priority { background: #fff7ed; color: #ea580c; }
+        .btn-quick-join { flex: 1; height: 42px; border-radius: 12px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: background-color 0.2s; }
+        .btn-join-regular { background: #eedffa; color: #5e4ae3; }
+        .btn-join-regular:hover { background: #e3ceff; }
+        .btn-join-priority { background: #fff1e7; color: #ea580c; }
+        .btn-join-priority:hover { background: #ffe3d5; }
 
-        .category-select-card { background: #ffffff; border: 1px solid #f3f4f6; border-radius: 20px; padding: 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-        .card-left-specs { display: flex; flex-direction: column; gap: 4px; }
-        .tier-label-name { font-size: 16px; font-weight: 700; color: #111827; }
-        .tier-subtext-descript { font-size: 13px; color: #6b7280; }
-        .metric-badge-pill { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 10px; display: inline-block; }
-        .pill-regular { background: #eff6ff; color: #3b82f6; }
-        .pill-priority { background: #fff7ed; color: #ea580c; }
+        .category-select-card { background: #ffffff; border: 1px solid #f1f3f7; border-radius: 20px; padding: 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.01); transition: border-color 0.2s, background-color 0.2s; }
+        .category-select-card:active { border-color: rgba(94, 74, 227, 0.15); background: #fdfbfe; }
+        .card-left-specs { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+        .tier-label-name { font-size: 16px; font-weight: 700; color: #1f2235; }
+        .tier-subtext-descript { font-size: 13px; color: #7e849c; line-height: 1.4; font-weight: 500; }
+        
+        .metric-badge-pill { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; width: fit-content; margin-top: 2px; }
+        .pill-regular { background: #e6f0ff; color: #3b82f6; }
+        .pill-priority { background: #fff1e7; color: #ea580c; }
+        .arrow-action-node { color: #a3a9c2; flex-shrink: 0; margin-left: 12px; display: flex; align-items: center; }
 
-        .modal-blur-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 9, 20, 0.4); backdrop-filter: blur(4px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 24px; }
-        .pop-up-container-box { width: 100%; max-width: 380px; background: #ffffff; border-radius: 24px; padding: 24px; text-align: center; }
-        .pop-up-icon-box { width: 52px; height: 52px; background: #f5f3ff; color: #6d28d9; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; margin: 0 auto 16px auto; }
-        .pop-up-container-box h4 { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 8px; }
-        .pop-up-container-box p { font-size: 13.5px; color: #6b7280; line-height: 1.5; margin-bottom: 24px; }
+        /* 🎟️ DYNAMIC PREMIUM MODAL */
+        .modal-blur-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 9, 20, 0.4); backdrop-filter: blur(5px); z-index: 5000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .pop-up-container-box { width: 100%; max-width: 360px; background: #ffffff; border-radius: 28px; padding: 28px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.15); animation: popScaleIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popScaleIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        /* Modal dynamic tier header styling color states depending on choice selection */
+        .pop-up-icon-box { width: 56px; height: 56px; background: #eedffa; color: #5e4ae3; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; margin: 0 auto 16px auto; }
+        .pop-up-container-box.priority-selected .pop-up-icon-box { background: #fff1e7; color: #ea580c; }
+        
+        .pop-up-container-box h4 { font-size: 19px; font-weight: 800; color: #1f2235; margin-bottom: 6px; }
+        .pop-up-container-box p { font-size: 13.5px; color: #7e849c; line-height: 1.5; margin-bottom: 20px; font-weight: 500; }
+        
+        /* Modal dynamic spec matrix blocks */
+        .modal-data-preview-badge { display: flex; justify-content: space-around; background: #f1f3f7; padding: 12px 8px; border-radius: 14px; margin-bottom: 24px; gap: 4px; }
+        .badge-data-segment { display: flex; flex-direction: column; align-items: center; width: 50%; }
+        .badge-data-segment .label-top-tag { font-size: 10px; font-weight: 700; color: #7e849c; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+        .badge-data-segment .value-bold { font-size: 14px; font-weight: 800; color: #1f2235; }
+
         .modal-action-btn-group { display: flex; flex-direction: column; gap: 10px; }
-        .btn-modal-confirm { width: 100%; background: linear-gradient(135deg, #6d28d9 0%, #4a23b6 100%); color: #ffffff; border: none; border-radius: 14px; height: 48px; font-size: 14.5px; font-weight: 700; cursor: pointer; }
-        .btn-modal-cancel { width: 100%; background: #f3f4f6; color: #4b5563; border: none; border-radius: 14px; height: 48px; font-size: 14.5px; font-weight: 600; cursor: pointer; }
+        .btn-modal-confirm { width: 100%; background: linear-gradient(135deg, #6d28d9 0%, #4a23b6 100%); color: #ffffff; border: none; border-radius: 14px; height: 50px; font-size: 14.5px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(109, 40, 217, 0.25); }
+        .btn-modal-cancel { width: 100%; background: #f1f3f7; color: #4a4d61; border: none; border-radius: 14px; height: 50px; font-size: 14.5px; font-weight: 700; cursor: pointer; }
       `}</style>
 
       <div className="mobile-layout">
+        
+        {/* 🎟️ DYNAMIC COUNTER PREVIEW POPUP SYSTEM */}
         {showConfirmModal && (
           <div className="modal-blur-overlay">
-            <div className="pop-up-container-box">
-              <div className="pop-up-icon-box">🎟️</div>
-              <h4>Confirm Queue Join</h4>
-              <p>Are you sure you want to join the queue here at <strong>{getVenueDisplayName(venueId)}</strong>? This will generate your immediate slot voucher token.</p>
+            <div className={`pop-up-container-box ${pendingQueueType === 'priority' ? 'priority-selected' : ''}`}>
+              <div className="pop-up-icon-box">
+                {pendingQueueType === 'priority' ? '⭐' : '🎟️'}
+              </div>
+              <h4>Join {pendingQueueType === 'priority' ? 'Priority Tier' : 'Standard Tier'}</h4>
+              <p>Confirm booking ticket entry at <strong>{getVenueDisplayName(venueId)}</strong>. Your live position log will register immediately.</p>
+              
+              {/* Dynamic Context Parameters Layer Block */}
+              <div className="modal-data-preview-badge">
+                <div className="badge-data-segment" style={{ borderRight: '1px solid #e2e4ee' }}>
+                  <span className="label-top-tag">Expected Wait</span>
+                  <span className="value-bold" style={{ color: pendingQueueType === 'priority' ? '#ea580c' : '#3b82f6' }}>
+                    {pendingQueueType === 'priority' ? '8-12 Mins' : '20-25 Mins'}
+                  </span>
+                </div>
+                <div className="badge-data-segment">
+                  <span className="label-top-tag">Tokens In Line</span>
+                  <span className="value-bold">
+                    {pendingQueueType === 'priority' ? '3 Active' : '14 Active'}
+                  </span>
+                </div>
+              </div>
+
               <div className="modal-action-btn-group">
                 <button className="btn-modal-confirm" onClick={handleConfirmAndJoin}>Yes, Join Queue</button>
                 <button className="btn-modal-cancel" onClick={() => setShowConfirmModal(false)}>Cancel</button>
@@ -151,9 +199,13 @@ export default function SelectQueueType() {
           </div>
         )}
 
+        {/* Top Navbar */}
         <div className="top-navbar">
           <button className="back-arrow-btn" onClick={() => navigate('/')}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
           </button>
           <h2 className="navbar-title">{isManualDirectoryRoute ? "Select Manually" : "Select Queue Type"}</h2>
         </div>
@@ -165,7 +217,6 @@ export default function SelectQueueType() {
                 <input type="text" placeholder="Search branch location or keywords..." value={manualSearchQuery} onChange={(e) => setManualSearchQuery(e.target.value)} />
               </div>
               
-              {/* 📊 FEATURE 1 CHART LOADED INSIDE DISCOVERY FILTER */}
               <BestTimeGraph />
 
               <h3 className="section-prompt">Search Results ({filteredDirectoryItems.length})</h3>
@@ -183,7 +234,7 @@ export default function SelectQueueType() {
                   </div>
                 ))
               ) : (
-                <div style={{ textAlign: 'center', padding: '20px', color: '#9ca3af', fontSize: '13.5px' }}>No branches discovered.</div>
+                <div style={{ textAlign: 'center', padding: '24px', color: '#9da3b4', fontSize: '14px', fontWeight: 500 }}>No branches discovered.</div>
               )}
             </>
           ) : (
@@ -193,17 +244,19 @@ export default function SelectQueueType() {
                 <h2>{getVenueDisplayName(venueId)}</h2>
               </div>
 
-              {/* 📊 FEATURE 1 CHART LOADED INSIDE SPECIFIC CATEGORY VIEWS */}
               <BestTimeGraph />
 
               <h3 className="section-prompt">Available Counters</h3>
+              
               <div className="category-select-card" onClick={() => handleCardClickPrompt('normal')}>
                 <div className="card-left-specs">
                   <div className="tier-label-name">Standard Counter</div>
                   <p className="tier-subtext-descript">General inquiries and standard service checkouts.</p>
                   <div className="metric-badge-pill pill-regular">Avg Wait: ~20 mins</div>
                 </div>
-                <div>▶</div>
+                <div className="arrow-action-node">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
               </div>
 
               <div className="category-select-card" onClick={() => handleCardClickPrompt('priority')}>
@@ -212,7 +265,9 @@ export default function SelectQueueType() {
                   <p className="tier-subtext-descript">Reserved exclusively for Senior Citizens or physical assistance.</p>
                   <div className="metric-badge-pill pill-priority">Avg Wait: ~8 mins</div>
                 </div>
-                <div>▶</div>
+                <div className="arrow-action-node">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
               </div>
             </>
           )}

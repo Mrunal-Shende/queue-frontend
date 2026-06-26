@@ -14,26 +14,19 @@ const Home = () => {
   const qrScannerRef = useRef(null);
   const SCANNER_ELEMENT_ID = "physical-camera-stream-frame";
 
-  // Expanded high-fidelity static location database covering multiple real-world category nodes
+  // Expanded high-fidelity static location database
   const staticLocationsPool = [
-    // Original Baseline Locations
     { id: 'max-care-789', name: 'Max Care Hospital', category: 'Medical & Healthcare', distance: '0.8 km' },
     { id: 'hdfc-bank-111', name: 'HDFC Bank - Main Branch', category: 'Banking & Finance', distance: '1.2 km' },
     { id: 'airtel-store-002', name: 'Airtel Digital Store', category: 'Telecom & Tech Store', distance: '3.1 km' },
     { id: 'apollo-pharmacy-88', name: 'Apollo Pharmacy 24/7', category: 'Medical & Healthcare', distance: '3.7 km' },
     { id: 'reliance-digital-9', name: 'Reliance Digital Hub', category: 'Electronics & Retail', distance: '4.3 km' },
-
-    // NEW: Automobile Showrooms Sector Nodes
     { id: 'suzuki-arena-01', name: 'Maruti Suzuki Arena - Showroom', category: 'Automobile Showroom', distance: '1.5 km' },
     { id: 'suzuki-nexa-02', name: 'Suzuki Nexa - Premium Outlets', category: 'Automobile Showroom', distance: '2.8 km' },
     { id: 'honda-wheels-03', name: 'Honda Elevate Automobile Hub', category: 'Automobile Showroom', distance: '3.4 km' },
-
-    // NEW: Academic Institutions & Colleges Sector Nodes
     { id: 'pote-patil-edu', name: 'P.R. Pote Patil College (Admission Cell)', category: 'College & University', distance: '2.1 km' },
     { id: 'kamala-nehru-edu', name: 'Kamala Nehru Degree College Desk', category: 'College & University', distance: '4.0 km' },
     { id: 'mit-tech-campus', name: 'MIT Engineering Admission Block', category: 'College & University', distance: '5.2 km' },
-
-    // NEW: Public Administration & Government Services Sector Nodes
     { id: 'rto-office-444', name: 'Regional RTO Office - License Wing', category: 'Government Place', distance: '2.5 km' },
     { id: 'aadhaar-seva-kendra', name: 'UIDAI Aadhaar Seva Kendra Centre', category: 'Government Place', distance: '1.9 km' },
     { id: 'municipal-corp-hq', name: 'City Municipal Corporation HQ', category: 'Government Place', distance: '3.8 km' }
@@ -45,12 +38,10 @@ const Home = () => {
     place.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Triggered when user selects an item from the predictive dropdown layer menu
   const handleDropdownItemClick = (place) => {
     setShowDropdown(false);
     setSearchQuery(place.name);
     
-    // Smooth user onboarding interaction: play satellite hardware tracking simulation loader overlay
     setScanStatus('Accessing live GPS via query token lookup...');
     setShowScanner(true);
 
@@ -79,7 +70,6 @@ const Home = () => {
     }
   };
 
-  // Connects and mounts active physical camera tracking streams
   const handleOpenScanner = async () => {
     setShowScanner(true);
     setScanStatus('Requesting smartphone camera access...');
@@ -155,83 +145,112 @@ const Home = () => {
   return (
     <div className="app-viewport">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         .app-viewport {
-          width: 100vw; height: 100vh; height: 100dvh; background-color: #f8f9fa;
-          font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; overflow: hidden;
+          width: 100vw; height: 100vh; height: 100dvh; background-color: #5e4ae3;
+          font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; padding: 12px;
         }
 
         .mobile-layout {
-          width: 100%; max-width: 480px; height: 100%; background: #ffffff; display: flex; flex-direction: column; position: relative; overflow: hidden;
+          width: 100%; max-width: 410px; height: 100%; max-height: 780px;
+          background: #ffffff; border-radius: 32px; display: flex; flex-direction: column;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); overflow: hidden; position: relative;
         }
 
-        .app-header {
-          background: linear-gradient(135deg, #6d28d9 0%, #4a23b6 100%);
-          padding: 24px 20px 28px 20px; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px; color: #ffffff; flex-shrink: 0; box-shadow: 0 4px 20px rgba(74, 35, 182, 0.1);
+        /* 🖼️ Updated Premium Abstract Theme Banner Slot */
+        .queue-header-banner {
+          width: 100%; height: 140px; background: linear-gradient(135deg, #5e4ae3 0%, #7e6fff 100%); overflow: hidden; flex-shrink: 0;
+          position: relative; display: flex; align-items: center; justify-content: center;
         }
-
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .user-greeting h3 { font-size: 13px; font-weight: 500; opacity: 0.85; margin-bottom: 2px; }
-        .user-greeting h2 { font-size: 20px; font-weight: 700; }
-
-        .notification-bell {
-          background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); width: 40px; height: 40px; border-radius: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative;
+        .queue-header-banner::before {
+          content: ""; position: absolute; width: 140px; height: 140px; border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1); top: -40px; right: -30px;
         }
-        .bell-dot { position: absolute; top: 11px; right: 12px; width: 7px; height: 7px; background: #ef4444; border-radius: 50%; }
-
-        .search-section { position: relative; }
-        .search-title { font-size: 17px; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
-        
-        .search-bar {
-          display: flex; align-items: center; background: #ffffff; border-radius: 14px; padding: 0 14px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); position: relative; z-index: 10;
+        .queue-header-banner::after {
+          content: ""; position: absolute; width: 210px; height: 210px; border-radius: 50%;
+          background: rgba(255, 255, 255, 0.06); bottom: -90px; left: -40px;
         }
-        .search-bar svg { color: #9ca3af; margin-right: 10px; flex-shrink: 0; }
-        .search-bar input { border: none; outline: none; width: 100%; height: 46px; font-size: 14px; color: #1f2937; font-family: inherit; }
-
-        /* LIVE DROPDOWN PREDICTIONS PANEL */
-        .search-suggestions-dropdown {
-          position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); border: 1px solid #e5e7eb; z-index: 500; max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; padding: 6px 0;
+        .brand-logo-hud {
+          color: #ffffff; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 5;
         }
-        .suggestion-item-row {
-          display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid #f3f4f6;
-        }
-        .suggestion-item-row:last-child { border-bottom: none; }
-        .suggestion-item-row:hover { background: #f5f3ff; }
-        .item-row-title { font-size: 13.5px; font-weight: 700; color: #111827; margin-bottom: 2px; }
-        .item-row-category { font-size: 11px; font-weight: 600; color: #6d28d9; text-transform: uppercase; letter-spacing: 0.3px; }
-        .item-row-dist { font-size: 11px; font-weight: 700; color: #374151; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+        .brand-logo-hud svg { width: 36px; height: 36px; opacity: 0.95; }
+        .brand-logo-hud span { font-size: 16px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; opacity: 0.9; }
 
-        .scrollable-body { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; -ms-overflow-style: none; scrollbar-width: none; }
+        /* Compact Non-Congested Scrollable Body */
+        .scrollable-body {
+          flex-grow: 1; overflow-y: auto; padding: 24px 24px 36px 24px; display: flex; flex-direction: column; gap: 16px;
+          -ms-overflow-style: none; scrollbar-width: none;
+        }
         .scrollable-body::-webkit-scrollbar { display: none; }
 
-        .action-card { background: #ffffff; border: 1px solid #f3f4f6; border-radius: 18px; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s ease; }
-        .action-card:active { transform: scale(0.98); background: #fafafa; border-color: #edd8ff; }
-        .card-icon-box { width: 46px; height: 46px; border-radius: 12px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .icon-qr { background: #f5f3ff; color: #6d28d9; }
-        .icon-geo { background: #ecfdf5; color: #10b981; }
-        .icon-list { background: #eff6ff; color: #3b82f6; }
-        .card-info { flex-grow: 1; min-width: 0; }
-        .card-info h4 { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 2px; }
-        .card-info p { font-size: 12.5px; color: #6b7280; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .arrow-right { color: #9ca3af; flex-shrink: 0; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        .user-greeting h3 { font-size: 13.5px; font-weight: 500; color: #7e849c; margin-bottom: 1px; }
+        .user-greeting h2 { font-size: 21px; font-weight: 800; color: #1f2235; letter-spacing: -0.5px; }
 
-        .camera-scanner-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #0b0914; z-index: 2000; display: flex; flex-direction: column; justify-content: space-between; padding: 35px 24px; }
+        .notification-bell {
+          background: #f1f3f7; width: 42px; height: 42px; border-radius: 12px; 
+          display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative;
+          color: #1f2235;
+        }
+        .bell-dot { position: absolute; top: 13px; right: 14px; width: 6px; height: 6px; background: #ea3d3d; border-radius: 50%; }
+
+        .search-section { position: relative; }
+        .search-title { font-size: 13px; font-weight: 700; color: #4a4d61; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+        
+        .search-bar {
+          display: flex; align-items: center; background: #f1f3f7; border-radius: 14px; padding: 0 16px; 
+          position: relative; z-index: 10; height: 52px; border: 1px solid transparent; transition: all 0.2s;
+        }
+        .search-bar:focus-within { background: #ffffff; border-color: #5e4ae3; box-shadow: 0 0 0 4px rgba(94, 74, 227, 0.1); }
+        .search-bar svg { color: #4a4d61; margin-right: 12px; flex-shrink: 0; width: 16px; height: 16px; }
+        .search-bar input { border: none; outline: none; width: 100%; height: 100%; font-size: 14px; color: #1f2235; font-weight: 600; background: transparent; }
+        .search-bar input::placeholder { color: #9da3b4; font-weight: 500; }
+
+        .search-suggestions-dropdown {
+          position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border-radius: 14px; 
+          box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid #eef0f6; z-index: 500; max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; padding: 4px 0;
+        }
+        .suggestion-item-row {
+          display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid #f8f9fb;
+        }
+        .suggestion-item-row:last-child { border-bottom: none; }
+        .suggestion-item-row:hover { background: #fdfbfe; }
+        .item-row-title { font-size: 13.5px; font-weight: 700; color: #1f2235; margin-bottom: 2px; }
+        .item-row-category { font-size: 10.5px; font-weight: 700; color: #5e4ae3; text-transform: uppercase; letter-spacing: 0.4px; }
+        .item-row-dist { font-size: 11px; font-weight: 700; color: #4a4d61; background: #f1f3f7; padding: 3px 6px; border-radius: 5px; }
+
+        /* Compact action stack heights to reduce scrolling completely */
+        .action-cards-stack { display: flex; flex-direction: column; gap: 14px; }
+        .action-card { 
+          background: #ffffff; border: 1px solid #eef0f6; border-radius: 14px; padding: 16px; 
+          display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s ease; 
+        }
+        .action-card:active { transform: scale(0.99); background: #f9fafc; }
+        
+        .card-icon-box { width: 44px; height: 44px; border-radius: 12px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .card-icon-box svg { width: 20px; height: 20px; }
+        .icon-qr { background: #eedffa; color: #5e4ae3; }
+        .icon-geo { background: #e3f9ee; color: #10b981; }
+        .icon-list { background: #e6f0ff; color: #3b82f6; }
+        
+        .card-info { flex-grow: 1; min-width: 0; }
+        .card-info h4 { font-size: 15px; font-weight: 700; color: #1f2235; margin-bottom: 2px; }
+        .card-info p { font-size: 12.5px; color: #7e849c; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+        .arrow-right { color: #a3a9c2; flex-shrink: 0; display: flex; align-items: center; }
+
+        .camera-scanner-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #0b0914; z-index: 2000; display: flex; flex-direction: column; justify-content: space-between; padding: 36px 24px; }
         .scanner-header { display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
         .scanner-header h3 { font-size: 18px; font-weight: 700; }
-        .close-scanner-btn { background: rgba(255, 255, 255, 0.15); border: none; color: #ffffff; width: 38px; height: 38px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .hardware-viewfinder-wrapper { width: 280px; height: 280px; margin: 0 auto; position: relative; border-radius: 24px; overflow: hidden; border: 3px solid #6d28d9; box-shadow: 0 0 20px rgba(109, 40, 217, 0.3); }
+        .close-scanner-btn { background: rgba(255, 255, 255, 0.15); border: none; color: #ffffff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .hardware-viewfinder-wrapper { width: 260px; height: 280px; margin: 0 auto; position: relative; border-radius: 24px; overflow: hidden; border: 3px solid #5e4ae3; box-shadow: 0 0 20px rgba(94, 74, 227, 0.3); }
         #physical-camera-stream-frame { width: 100% !important; height: 100% !important; object-fit: cover !important; background: #111; }
         .laser-glow-line { width: 100%; height: 3px; background: #10b981; box-shadow: 0 0 14px #10b981; position: absolute; left: 0; z-index: 10; animation: laserPingMotion 2s infinite ease-in-out; }
         @keyframes laserPingMotion { 0%, 100% { top: 0%; } 50% { top: 100%; } }
-        .scanner-status-badge { color: #ffffff; text-align: center; font-size: 13px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 10px 20px; border-radius: 20px; margin: 20px auto 0 auto; display: block; max-width: 90%; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-simulate-manual-capture { width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; border-radius: 16px; height: 52px; font-size: 14.5px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25); margin-top: 16px; }
-
-        .fixed-bottom-nav { height: 68px; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); border-top: 1px solid #f3f4f6; display: flex; justify-content: space-around; align-items: center; flex-shrink: 0; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 11px; font-weight: 600; width: 33.33%; height: 100%; justify-content: center; }
-        .nav-item.active { color: #6d28d9; }
+        .scanner-status-badge { color: #ffffff; text-align: center; font-size: 13px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 12px 20px; border-radius: 20px; margin: 20px auto 0 auto; display: block; max-width: 90%; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .btn-simulate-manual-capture { width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; border-radius: 14px; height: 50px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25); margin-top: 20px; }
       `}</style>
 
       <div className="mobile-layout">
@@ -243,7 +262,7 @@ const Home = () => {
               <h3>Processing Target Node</h3>
               <button className="close-scanner-btn" onClick={handleCloseScanner}>✕</button>
             </div>
-            <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '100px' }}>
+            <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifycontent: 'center', marginTop: '40px' }}>
               <div className="hardware-viewfinder-wrapper">
                 <div className="laser-glow-line"></div>
                 <div id={SCANNER_ELEMENT_ID}></div>
@@ -258,20 +277,32 @@ const Home = () => {
           </div>
         )}
 
-        {/* PRIMARY APP MAIN HEADER WITH COMPREHENSIVE DROPDOWN INDEX */}
-        <div className="app-header">
+        {/* 🎨 CLEAN ABSTRACT THEME BANNER HEADER (Replaced Image URL) */}
+        <div className="queue-header-banner">
+          <div className="brand-logo-hud">
+            <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            </svg>
+            <span>Smart Queue</span>
+          </div>
+        </div>
+
+        <div className="scrollable-body">
+          
+          {/* Welcome Greeting Elements */}
           <div className="header-top">
             <div className="user-greeting"><h3>Hello, 👋</h3><h2>Good Morning!</h2></div>
             <div className="notification-bell" onClick={() => navigate('/notifications')}>
               <span className="bell-dot"></span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
             </div>
           </div>
 
+          {/* Search Input Block */}
           <div className="search-section">
             <h1 className="search-title">Where do you want to join a queue?</h1>
             <div className="search-bar">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input
                 type="text"
                 placeholder="Search Showrooms, Colleges, RTO..."
@@ -282,7 +313,7 @@ const Home = () => {
               />
             </div>
 
-            {/* EXPANDED DYNAMIC SUGGESTIONS DROPDOWN PANEL */}
+            {/* DYNAMIC SUGGESTIONS DROPDOWN PANEL */}
             {showDropdown && searchQuery.trim() !== '' && (
               <div className="search-suggestions-dropdown">
                 {filteredLocations.length > 0 ? (
@@ -301,34 +332,34 @@ const Home = () => {
               </div>
             )}
           </div>
-        </div>
 
-        {/* CORE QUICK SHORTCUT HUB ACTION CARDS */}
-        <div className="scrollable-body">
-          <div className="action-card" onClick={handleOpenScanner}>
-            <div className="card-icon-box icon-qr"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
-            <div className="card-info"><h4>Scan QR Code</h4><p>Scan instant ticketing codes at the front gate desk.</p></div>
-            <div className="arrow-right"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+          {/* COMPACT SHORTCUT ACTION CARDS */}
+          <div className="action-cards-stack">
+            <div className="action-card" onClick={handleOpenScanner}>
+              <div className="card-icon-box icon-qr">
+                <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </div>
+              <div className="card-info"><h4>Scan QR Code</h4><p>Scan instant ticketing codes at the front gate desk.</p></div>
+              <div className="arrow-right"><svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+            </div>
+
+            <div className="action-card" onClick={() => navigate('/nearby-places')}>
+              <div className="card-icon-box icon-geo">
+                <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div className="card-info"><h4>Nearby Places</h4><p>Find available branches within traveling radius.</p></div>
+              <div className="arrow-right"><svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+            </div>
+
+            <div className="action-card" onClick={() => navigate('/select-queue/manual-venue-001')}>
+              <div className="card-icon-box icon-list">
+                <svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+              </div>
+              <div className="card-info"><h4>Select Manually</h4><p>Search alphabetically across all partner centers.</p></div>
+              <div className="arrow-right"><svg fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+            </div>
           </div>
 
-          <div className="action-card" onClick={() => navigate('/nearby-places')}>
-            <div className="card-icon-box icon-geo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-            <div className="card-info"><h4>Nearby Places</h4><p>Find available branches within traveling radius.</p></div>
-            <div className="arrow-right"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
-          </div>
-
-          <div className="action-card" onClick={() => navigate('/select-queue/manual-venue-001')}>
-            <div className="card-icon-box icon-list"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></div>
-            <div className="card-info"><h4>Select Manually</h4><p>Search alphabetically across all partner centers.</p></div>
-            <div className="arrow-right"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
-          </div>
-        </div>
-
-        {/* FIXED FOOTER NAV DECK */}
-        <div className="fixed-bottom-nav">
-          <button className="nav-item active" onClick={() => navigate('/')}><span>Home</span></button>
-          <button className="nav-item" onClick={() => navigate('/history')}><span>History</span></button>
-          <button className="nav-item" onClick={() => navigate('/profile')}><span>Profile</span></button>
         </div>
       </div>
     </div>
